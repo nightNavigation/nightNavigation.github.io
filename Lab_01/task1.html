@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<title>task1</title>
+		<!-- 顶点着色器 -->
+		<script id="vertex-shader" type="x-shader/x-vertex">
+			attribute vec4 vPosition;
+			void main(){
+				gl_Position = vPosition;  // 记录定点输出的状态变量
+			}
+		</script>
+		<!-- 片元着色器 -->
+		<script id="fragment-shader" type="x-shader/x-fragment">
+			precision mediump float;  // 确定精度，必不可少
+			void main(){
+				// 指定四维的RGBA颜色，vec4向量中的四个值分别对应 R、G、B、A
+				// gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+				gl_FragColor = vec4(0.0, 0.6, 0.0, 1.0);
+			}
+		</script>
+		<!-- 一组相关的JS库 -->
+		<script type="text/javascript" src="./common/webgl-utils.js"></script>
+		<script type="text/javascript" src="./common/initShaders.js"></script>
+		<script type="text/javascript" src="./common/gl-matrix-min.js"></script>
+		<!-- 制作三角形的JS代码 -->
+		<script type="text/javascript" src="./js/triangleTask1.js"></script>
+	</head>
+	<body>
+		<h1>任务A</h1>
+		<h3>修改三角形的显示颜色，比如改成蓝色或绿色</h3>
+		<canvas id="triangle-canvas" style="border: none;" width="360" height="360"></canvas>
+		<br />
+		<hr size="4" color="blue" width="600" align="left" />
+		<a href="./index.html"><button type="button">返回</button></a>
+	</body>
+</html>
