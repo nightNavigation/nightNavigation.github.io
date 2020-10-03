@@ -1,7 +1,7 @@
 # nightNavigation
 
 ### Welcome to the night navigation boat of mine
-Here is=>[my introduction](./Lab_00/index.html) 
+Here is=>[my introduction](./Lab_00/inex.html) 
 
 
 ##### Vector picture made by PS.  
@@ -10,3 +10,6 @@ Here is=>[my introduction](./Lab_00/index.html)
 
 ##### Basic operation of WebGL. 
 * [Lab_1](./Lab_01/index.html)
+
+##### Sierpinski Gasket
+* [Lab_2](./Lab_02/task.html)

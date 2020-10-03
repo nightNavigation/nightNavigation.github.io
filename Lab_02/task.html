@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<title>Sierpinski Gasket </title>
+		<script id="vertex-shader-2d" type="x-shader/x-vertex">
+		attribute vec4 vPosition;
+		void main(){
+			gl_Position = vPosition;
+		}
+		</script>
+
+		<script id="fragment-shader-2d" type="x-shader/x-fragment">
+		precision mediump float;
+		void main(){
+			gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
+		}
+		</script>
+		<script id="vertex-shader-3d" type="x-shader/x-vertex">
+			attribute vec3 vPosition;
+			attribute vec3 vColor;
+			varying vec4 color;
+			void main(){
+				gl_Position = vec4(vPosition, 1.0);
+				color = vec4(vColor, 1.0);
+			}
+		</script>
+		<script id="fragment-shader-3d" type="x-shader/x-fragment">
+			precision mediump float;
+			varying vec4 color;
+			void main(){
+				gl_FragColor = color;
+			}
+		</script>
+
+		<script type="text/javascript" src="./common/gl-matrix-min.js"></script>
+		<script type="text/javascript" src="./common/initShaders.js"></script>
+		<script type="text/javascript" src="./common/webgl-utils.js"></script>
+
+		<script type="text/javascript" src="./js/gasket-triangles.js"></script>
+	</head>
+	<body>
+		<h2>Sierpinski Gasket 2D / 3D</h2>
+		<button id="Cancel" type="button">初始化</button>
+		<canvas id="triangle-canvas" width="512" height="512" style="float: left;">你的浏览器不支持HTML5 canvas元素</canvas>
+		<h4>任务a. 要求在网页上添加交互式控件，输入剖分的层次(0-7)，绘制对应图案。</h4>
+		层数控件（0~7，初始值为4）：<input type="range" id="selNum" min= "0" max="7" value="4"/>
+		<hr color="#974BE0" width="500px" align="left">
+		<h4>任务b. 绘制三维效果的Sierpinski Gasket, 要求同任务a</h4>
+		<h4>任务c. 完成不同层次剖分效果的绘制，此处绘制采用线框模式</h4>
+		2D:<input type="radio" name="shape" value="2d" checked="checked"/>&nbsp;&nbsp;&nbsp;&nbsp;
+		3D:<input type="radio" name="shape" value="3d"/>&nbsp;&nbsp;&nbsp;&nbsp;
+		线框：<input type="radio" name="shape" value="wire"/>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button  id="selShape" type="button">形状选择：确定</button>
+		<hr color="#974BE0" width="500px" align="left">
+		<h4>任务d. 任务c中剖分后的三角形添加旋转效果。</h4>
+		<h4>任务e. 在任务d中，如果旋转角度根据点到原点的距离设定</h4>
+		关:<input type="radio" name="switch" value="2d" checked="checked"/>&nbsp;&nbsp;&nbsp;&nbsp;
+		任务d:<input type="radio" name="switch" value="3d"/>&nbsp;&nbsp;&nbsp;&nbsp;
+		任务e：<input type="radio" name="switch" value="wire"/>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button  id="selSwitch" type="button">旋转选择：确定</button>
+		<br /><br />
+		旋转角度控制（0~360，初始值为60）：<input type="range" id="rotate" min= "0" max="360" value="60"/>
+	</body>
+</html>
