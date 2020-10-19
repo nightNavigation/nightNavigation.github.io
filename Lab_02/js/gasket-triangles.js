@@ -201,7 +201,7 @@ function triangle2d(a, b, c){
 
 function divideTriangle2d(a, b, c, count){
 	if(count == 0){
-		if(isRotate) tessellaTriangle( a, b, c );
+		if(isRotate) tessellaTriangle(a, b, c);
 		else triangle2d(a, b, c);
 	}else{
 		var ab = vec3.create();
@@ -339,26 +339,6 @@ function tessellaTriangle( a, b, c ){
 
 	}
 }
-
-// function divideTriangle( a, b, c, count ){
-// 	// check for end of recursion
-// 	if( count == 0 ){
-// 		tessellaTriangle( a, b, c );
-// 	}else{
-// 		var ab = vec3.create();
-// 		vec3.lerp( ab, a, b, 0.5 );
-// 		var bc = vec3.create();
-// 		vec3.lerp( bc, b, c, 0.5 );
-// 		var ca = vec3.create();
-// 		vec3.lerp( ca, c, a, 0.5 );
-
-// 		// three new triangles
-// 		divideTriangle( a, ab, ca, count-1 );
-// 		divideTriangle( ab, b, bc, count-1 );
-//      divideTriangle( ca, bc, c, count-1 );
-//      divideTriangle( ab, bc, ca, count-1 );
-// 	}
-// }
 
 function renderTriangles(){
 	gl.clear( gl.COLOR_BUFFER_BIT );
