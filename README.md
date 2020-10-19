@@ -13,3 +13,6 @@ Here is=>[my introduction](./Lab_00/inex.html)
 
 ##### Sierpinski Gasket
 * [Lab_2](./Lab_02/task.html)
+
+##### Rotating Triangle And my Flash.
+* [Lab_3](./Lab_03/task.html)
