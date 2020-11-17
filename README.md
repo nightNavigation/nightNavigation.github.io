@@ -19,3 +19,6 @@ Here is=>[my introduction](./Lab_00/inex.html)
 
 ##### Rotating Cube and various Graphical.
 * [Lab_4](./Lab_04/index.html)
+
+##### OJB model.
+* [Lab_5](./Lab_05/index.html)

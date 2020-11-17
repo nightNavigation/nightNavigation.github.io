@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<title>实验五</title>
+		<script id="vertex-shader" type="x-shader/x-vertex">
+			attribute vec4 vPosition;
+			attribute vec4 vColor;
+			varying vec4 fColor;
+		
+			uniform mat4 modelViewMatrix;
+			uniform mat4 projectionMatrix;
+			uniform vec3 zoom;
+		
+			void main()
+			{
+				mat4 Zoom = mat4(1.0+zoom[0], 0.0, 0.0, 0.0,
+								 0.0, 1.0+zoom[1], 0.0, 0.0,
+								 0.0, 0.0, 1.0+zoom[2], 0.0,
+								 0.0, 0.0, 0.0, 1.0);
+				
+				gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+				gl_Position = Zoom * gl_Position;
+				fColor = vColor;	
+			}
+		</script>
+		
+		<script id="fragment-shader" type="x-shader/x-fragment">
+			precision mediump float;
+		
+			varying vec4 fColor;
+		
+			void main()
+			{
+				gl_FragColor = fColor;
+			}
+		</script>
+		
+		<script type="text/javascript" src="./common/webgl-utils.js"></script>
+		<script type="text/javascript" src="./common/initShaders.js"></script>
+		<script type="text/javascript" src="./common/gl-matrix-min.js"></script>
+		<script type="text/javascript" src="./common/objloader.js"></script>
+		<script type="text/javascript" src="./js/complexobjview.js"></script>
+	</head>
+	<body>
+		<h1>实验五</h1>
+		<div>
+			<canvas id="gl-canvas" width="800" height="800" style="float: left;margin-right: 10px;">
+				你的浏览器不支持HTML5 Canvas元素
+			</canvas>
+		</div>
+		<div style="border:5px red">
+			<label>选择一个OBJ模型文件</label>
+			<input type="file" id="fileInput"><pre id="fileDisplay"></pre>
+		</div>
+		<div>
+			<label>选择投影方式 : </label>
+			<input type="radio" id="ortho" name="projtype" value="1" checked><label>正交投影</label>
+			&nbsp;
+			<input type="radio" id="persp" name="projtype" value="2"><label>透视投影</label>
+			<!-- <label id="projtyperes"></label> -->
+		</div>
+		<div>
+			<label>选择绘制方式 : </label>
+			<input type="radio" id="wire" name="drawtype" value="1" checked><label>线框模式</label>
+			&nbsp;
+			<input type="radio" id="solid" name="drawtype" value="2" ><label>实体模式</label><br />
+			<label>颜色选择 : </label>
+			<input type="color" id="objcolor" name="objcolor" value="#ff0000">
+		</div>
+		
+		<div>
+			<label>改变对象位置 : </label><input type="radio" id="objpos" name="posgrp" value="1" checked><label>物体位置</label>
+			&nbsp;
+			<input type="radio" id="campos" name="posgrp" value="2"><label>相机位置</label>
+			<!-- <label id="projtyperes"></label> -->
+			<br>
+			<h3>平移、旋转、缩放</h3>
+			<table border="0">
+				<tr>
+					<td colspan="2"><label>重置按钮 : </label><button id="reSet" type="button">reset</button><br /></td>
+				</tr>
+				<tr><td colspan="2"><hr size="4" color="#2FA0EC" style="border: outset;"></td></tr>
+				<tr>
+					<td><label>x pos(press "a" / "d" can change)</label></td>
+					<td><input type="range" id="xpos" name="xpos" min="-5.0" max="5.0" step="0.1"></td>
+				</tr>
+				<tr>
+					<td><label>y pos(press "w" / "s" can change)</label></td>
+					<td><input type="range" id="ypos" name="ypos" min="-5.0" max="5.0" step="0.1"></td>
+				</tr>
+				<tr>
+					<td><label>z pos(press "z" / "x" can change)</label></td>
+					<td><input type="range" id="zpos" name="zpos" min="-5.0" max="5.0" step="0.1"></td>
+				</tr>
+				<tr><td colspan="2"><hr size="4" color="#2FA0EC" style="border: outset;"></td></tr>
+				<tr>
+					<td><label>x rot(press "h" / "k" can change)</label></td>
+					<td><input type="range" id="xrot" name="xrot" min="-360" max="360" step="1.0"></td>
+				</tr>
+				<tr>
+					<td><label>y rot(press "u" / "j" can change)</label></td>
+					<td><input type="range" id="yrot" name="yrot" min="-360" max="360" step="1.0"></td>
+				</tr>
+				<tr>
+					<td><label>z rot(press "n" / "m" can change)</label></td>
+					<td><input type="range" id="zrot" name="zrot" min="-360" max="360" step="1.0"></td>
+				</tr>
+				<tr><td colspan="2"><hr size="4" color="#2FA0EC" style="border: outset;"></td></tr>
+				<tr>
+					<td><label>x zoom(press "←" / "→" can change)</label></td>
+					<td><input type="range" id="xzoom" name="xzoom" min="-1" max="2" step="0.1"></td>
+				</tr>
+				<tr>
+					<td><label>y zoom(press "↑" / "↓" can change)</label></td>
+					<td><input type="range" id="yzoom" name="yzoom" min="-1" max="2" step="0.1"></td>
+				</tr>
+				<tr>
+					<td><label>z zoom(press "," / "." can change)</label></td>
+					<td><input type="range" id="zzoom" name="zzoom" min="-1" max="2" step="0.1"></td>
+				</tr>
+				<tr><td colspan="2"><hr size="4" color="#2FA0EC" style="border: outset;"></td></tr>
+				<!-- <tr>
+					<td><label>theta(press "4" / "6" can change)</label></td>
+					<td><input type="range" name="theta" id="theta" value="0" min="-360" max="360"/></td>
+				</tr> -->
+			</table>
+		</div>
+	</body>
+</html>
