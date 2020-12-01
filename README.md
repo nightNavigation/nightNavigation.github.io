@@ -22,3 +22,6 @@ Here is=>[my introduction](./Lab_00/inex.html)
 
 ##### OJB model.
 * [Lab_5](./Lab_05/index.html)
+
+##### Render A sphere.
+* [Lab_6](./Lab_06/index.html)

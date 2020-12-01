@@ -145,13 +145,18 @@ body{
 	width:400px; 
 	height: 150px;
 }
-#center .main ul{}
+#center .main ul{
+	height: 100px;
+	overflow: auto;
+}
 #center .main ul li{ 
 	line-height:20px; 
-	padding-left:10px; 
+	padding-left:10px;
+	float: inline-start;
 	width:300px;
 	white-space:nowrap;
 	text-overflow:ellipsis;
 	overflow:hidden;
 }
+
 
