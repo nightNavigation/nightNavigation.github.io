@@ -411,6 +411,7 @@ window.onload = function initSphere() {
 	$("select").click(function(){
 		var id = $("select").val()
 		// console.log(id);
+		id = parseInt(id);
 		switch(id){
 		  case 1:
 			// console.log("1");
