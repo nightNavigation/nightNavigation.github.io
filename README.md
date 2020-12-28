@@ -25,3 +25,6 @@ Here is=>[my introduction](./Lab_00/inex.html)
 
 ##### Render A sphere.
 * [Lab_6](./Lab_06/index.html)
+
+##### Render skyBox and obj.
+* [Lab_7](./Lab_07/index.html)
