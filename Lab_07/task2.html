@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script id="vshader-objtex" type="x-shader/x-vertex">	
+			attribute vec4 vPosition;
+			attribute vec3 vNormal;
+			
+			uniform mat4 modelViewMatrix;
+			uniform mat4 projectionMatrix;
+			
+			uniform mat3 normalMatrix;
+			
+			varying vec4 vertexPos;
+			varying vec3 normalInterp;
+			
+			uniform vec3 zoom;
+			varying vec2 fTexCoord;
+			void main(){
+				mat4 Zoom = mat4(1.0+zoom[0], 0.0, 0.0, 0.0,
+								 0.0, 1.0+zoom[1], 0.0, 0.0,
+								 0.0, 0.0, 1.0+zoom[2], 0.0,
+								 0.0, 0.0, 0.0, 1.0);
+				
+				vertexPos = modelViewMatrix * vPosition;
+				normalInterp = normalize(normalMatrix * vNormal.xyz);
+				gl_Position = projectionMatrix * modelViewMatrix * vertexPos;
+				
+				// gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+				gl_Position = Zoom * gl_Position;
+				// fColor = vColor;
+
+				fTexCoord = vec2( vPosition.x, vPosition.y );
+				// cylindrical coordinates
+				//fTexCoord = vec2(atan(-vertexPos.z, vertexPos.x), vertexPos.y)*0.35 + vec2(0.1, 0.1);
+				//fTexCoord = vec2(atan(-vPosition.z, vPosition.x), vPosition.y) * 0.35 + vec2(0.1, 0.1);
+				
+				// Sphereical coordinates
+				// float phi = (atan(vPosition.y, vPosition.x) + asin(1.0))/acos(0.0);
+				// float r = sqrt(pow(vPosition.x, float(2))+pow(vPosition.y, float(2))+pow(vPosition.z, float(2)));
+				// float theta = acos(vPosition.z/r)/acos(0.0);
+				// fTexCoord = vec2( theta, phi );
+				
+				// float pi = acos(0.0);
+				// float s = 0.5 * acos( vPosition.x )/pi;
+				// float t = 0.5 * asin( vPosition.y/sqrt(1.0-vPosition.x*vPosition.x))/pi;
+				// fTexCoord = vec2( s, t );
+			}
+		</script>
+		<script id="fshader-objtex" type="x-shader/x-fragment">
+			precision mediump float;
+
+			varying vec4 vertexPos;
+			varying vec3 normalInterp;
+			varying vec2 fTexCoord;
+
+			uniform vec3 lightPos;
+
+			uniform vec4 fColor;
+			uniform sampler2D texture;
+			uniform sampler2D texbump;
+			uniform samplerCube texCubemap;
+
+			uniform float averageBrightness;
+			uniform float maxBrightness;
+
+			uniform float textureAlpha;
+			uniform float shininess;
+			uniform float bumpDepth;
+
+			float blackness( vec4 color ){
+				return ( 3.0 - color.r - color.g - color.b ) * color.a * 0.33;
+			}
+
+			vec3 bump( sampler2D bumpSampler, vec2 coord, vec3 sDirection, vec3 tDirection )
+			{
+				vec2 dx = vec2( 1.0/256.0, 0.0 );
+				vec2 dy = vec2( 0.0, 1.0/256.0 );
+				float color = blackness( texture2D( bumpSampler, coord ) );
+				float x = (blackness( texture2D( bumpSampler, coord + dx ) ) - color );
+				float y = (blackness( texture2D( bumpSampler, coord + dy ) ) - color );
+				
+				return x * sDirection + y * tDirection;
+			}
+
+			void main()
+			{   
+				// for Bumping
+				vec3 sDirection = vec3( -sin(fTexCoord.s), 0.0, cos(fTexCoord.t) );
+				vec3 tDirection = vec3( 0.0, 1.0, 0.0 );
+				vec3 bumpVal = bump( texbump, fTexCoord, sDirection, tDirection ) * bumpDepth;
+
+				// for reflection
+				vec3 normal = normalize( normalInterp + bumpVal );
+				vec3 eyevec = normalize( -vertexPos.xyz );
+
+				vec3 reflection = reflect( eyevec, normal);
+
+				// for refraction
+				float iorefr = 0.7519; // air: 99.97%, glass: 52.2% to 59%, water: 75.19%, Sapphire: 56.5%, diamond: 41.33%
+				vec3 refraction = refract( eyevec, normal, 0.9997);
+
+				// lighting
+				
+				vec3 lightvec;
+				lightvec = normalize( lightPos.xyz - vertexPos.xyz );
+
+				vec4 ambientLight = vec4( 0.3, 0.3, 0.3, 0.3 );
+
+				float diffuse = max( dot( lightvec, normal ), 0.0 );
+				vec4 diffuseLight =vec4(vec3( 0.9, 0.9, 0.9 ) * averageBrightness,1.0);
+
+				float specular = 0.0;
+
+				if( diffuse > 0.0 )
+				{
+					vec3 rlight = reflect( -lightvec, normal );
+					float speculaAngle = max( dot( rlight, eyevec ), 0.0 );
+					specular = max( pow( speculaAngle, 2.0 ), 0.0 );
+				}
+				vec4 specularLight = vec4( vec3(0.9, 0.9, 0.9) * maxBrightness * 0.5, 1.0);
+				
+				vec4 lightColor = ambientLight + (diffuseLight * diffuse ) + (specularLight * specular );
+
+				vec4 texColor = texture2D(texture, fTexCoord);
+				vec4 texCubeColor = textureCube( texCubemap, reflection );
+				float texalpha = textureAlpha * texColor.a;
+
+				vec4 reflectColor = textureCube( texCubemap, reflection );
+
+				vec4 refractColor = textureCube( texCubemap, refraction );
+				refractColor = mix( refractColor, vec4(1.0, 1.0, 1.0, 1.0), 0.3);
+
+				vec4 surfaceColor = fColor * ( 1.0 - texalpha) + texColor * texalpha;
+				vec4 color = surfaceColor * lightColor * ( ( reflectColor * shininess ) + ( 1.0 - shininess ) );
+				//vec4 color = surfaceColor * lightColor * ( ( refractColor * shininess ) + ( 1.0 - shininess ) );
+				//vec4 color = surfaceColor * ( ( reflectColor * shininess ) + ( 1.0 - shininess ) );
+				
+				gl_FragColor = color;// lightColor ;
+			}
+		</script>
+		<script id="vshader-skybox" type="x-shader/x-vertex">
+		attribute vec4 vPosition;
+		//attribute vec2 vTexCoords;
+		attribute vec3 vNormal;
+		
+		uniform mat4 modelViewMatrix;
+		uniform mat4 projectionMatrix;
+		varying vec3 fTexCoords;
+		varying vec3 fNormal; // just for storage
+		void main(){
+		    vec4 eyePosition = projectionMatrix * modelViewMatrix * vPosition;
+		    fNormal = (modelViewMatrix * vec4(vNormal,1.0)).xyz;
+		    gl_Position = eyePosition;
+		    fTexCoords = -vPosition.xyz;
+		}
+		</script>
+		<script id="fshader-skybox" type="x-shader/x-fragment">
+			precision mediump float;
+			varying vec3 fTexCoords;
+			varying vec3 fNormal;
+			uniform samplerCube texCubemap;
+			
+			void main() {
+				vec3 normal = normalize(fNormal); //not used here.
+				gl_FragColor = textureCube(texCubemap, normalize(fTexCoords));
+			}
+		</script>
+		<script type="text/javascript" src="./common/webgl-utils.js"></script>
+		<script type="text/javascript" src="./common/initShaders.js"></script>
+		<script type="text/javascript" src="./common/gl-matrix.js"></script>
+		<script type="text/javascript" src="./common/objloader.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="./js/ObjRender.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.cameraBox{
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>OBJ模型渲染与天空盒</h1>
+		<div>
+			<canvas id="gl-canvas" width="800" height="800"  style="float: left;margin-right: 10px;">
+				Your browser does not support HTML5 Canvas element.
+			</canvas>
+		</div>
+		<div>
+			<label>选择投影方式 : </label>
+			<input type="radio" id="ortho" name="projtype" value="1" checked><label>正交投影</label>
+			&nbsp;
+			<input type="radio" id="persp" name="projtype" value="2"><label>透视投影</label>
+		</div>
+		<div>
+			<label>选择绘制方式 : </label>
+			<input type="radio" id="wire" name="drawtype" value="1" checked><label>线框模式</label>
+			&nbsp;
+			<input type="radio" id="solid" name="drawtype" value="2" ><label>实体模式</label><br />
+			<label>改变对象位置 : </label><input type="radio" id="objpos" name="posgrp" value="1" checked><label>物体位置</label>
+			&nbsp;
+			<input type="radio" id="campos" name="posgrp" value="2"><label>相机位置</label><br />
+		</div>
+		<table>
+		<tr>
+			<td><label>选择一个OBJ模型文件</label></td>
+			<td><input type="file" accept=".obj" id="modelInput"><pre id="modelfileDisplay"></pre></td>
+		</tr>
+		<tr>
+			<td><label>选择一个纹理文件</label></td>
+			<td><input type="file" accept=".jpg,.png,.gif,.jpeg" id="textureInput"><pre id="texfileDisplay"></pre></td>
+		</tr>
+		<tr>
+			<td><label>选择一个凹凸映射文件</label></td>
+			<td><input type="file" accept=".jpg,.png,.gif,.jpeg" id="bumpInput"><pre id="bumpfileDisplay"></pre></td>
+		</tr>
+		<tr>
+			<td>颜色选择：</td>
+			<td><input type="color" id="objcolor" name="objcolor" value="#ff0000"></td>
+		</tr>
+		<tr>
+			<td><div>Texture Alpha</div></td>
+			<td><input type="range" id="textureAlpha" type="range" max="1.0" min="0.0" step="0.01" value="1.0"/></td>
+		</tr>
+		<tr>
+			<td><div>Bump Depth</div></td>
+			<td><input type="range" id="bumpdepth" type="range" max="5.0" min="-5.0" step="0.01" value="0"/></td>
+		</tr>
+		<tr>
+			<td><div>Shininess</div></td>
+			<td><input id="shininess" type="range" min="0.1" max="1.0" value="1" step="0.01"/></td>
+		</tr>
+		<tr>
+			<td><div>Shadow </div></td>
+			<td><input id="shadowdepth" type="range" min="0.1" max="1.0" value="0.5" step="0.01"/></td>
+		</tr>
+		<tr><td colspan="2"><hr size="4" color="#2FA0EC" style="border: outset;"></td></tr>
+		</table>
+		<table border="0" id="shapeChange">
+			<tr><td colspan="2" align="center"><h3>平移、旋转、缩放</h3></td></tr>
+			<tr><td colspan="2"><hr size="4" color="#2FA0EC" style="border: outset;"></td></tr>
+			<tr>
+				<td><label>x pos(press "a" / "d" can change)</label></td>
+				<td><input type="range" id="xpos" name="xpos" min="-5.0" max="5.0" step="0.1"></td>
+			</tr>
+			<tr>
+				<td><label>y pos(press "w" / "s" can change)</label></td>
+				<td><input type="range" id="ypos" name="ypos" min="-5.0" max="5.0" step="0.1"></td>
+			</tr>
+			<tr>
+				<td><label>z pos(press "z" / "x" can change)</label></td>
+				<td><input type="range" id="zpos" name="zpos" min="-5.0" max="5.0" step="0.1"></td>
+			</tr>
+			<tr><td colspan="2"><hr size="4" color="#2FA0EC" style="border: outset;"></td></tr>
+			<tr>
+				<td><label>x rot(press "h" / "k" can change)</label></td>
+				<td><input type="range" id="xrot" name="xrot" min="-1" max="1" step="0.1"></td>
+			</tr>
+			<tr>
+				<td><label>y rot(press "u" / "j" can change)</label></td>
+				<td><input type="range" id="yrot" name="yrot" min="-1" max="1" step="0.1"></td>
+			</tr>
+			<tr>
+				<td><label>z rot(press "n" / "m" can change)</label></td>
+				<td><input type="range" id="zrot" name="zrot" min="-1" max="1" step="0.1"></td>
+			</tr>
+			<tr><td colspan="2"><hr size="4" color="#2FA0EC" style="border: outset;"></td></tr>
+			<tr>
+				<td><label>x zoom(press "←" / "→" can change)</label></td>
+				<td><input type="range" id="xzoom" name="xzoom" min="-1" max="2" step="0.1"></td>
+			</tr>
+			<tr>
+				<td><label>y zoom(press "↑" / "↓" can change)</label></td>
+				<td><input type="range" id="yzoom" name="yzoom" min="-1" max="2" step="0.1"></td>
+			</tr>
+			<tr>
+				<td><label>z zoom(press "," / "." can change)</label></td>
+				<td><input type="range" id="zzoom" name="zzoom" min="-1" max="2" step="0.1"></td>
+			</tr>
+			<tr><td colspan="2"><hr size="4" color="#2FA0EC" style="border: outset;"></td></tr>
+			<tr class="cameraBox">
+				<td colspan="2" align="center" style="font-weight: bold;">相机位置</td>
+			</tr>
+			<tr class="cameraBox">
+				<td><label>theta(press "4" / "6" can change)</label></td>
+				<td><input type="range" id="theta" name="theta" min="-1" max="1" step="0.1"></td>
+			</tr>
+			<tr class="cameraBox">
+				<td><label>pri(press "8" / "2" can change)</label></td>
+				<td><input type="range" id="phi" name="phi" min="-1" max="1" step="0.1"></td>
+			</tr>
+			<tr class="cameraBox">
+				<td><label>radius(press "+(=)" / "-" can change)</label></td>
+				<td><input type="range" id="radius" name="radius" min="-10" max="20" step="0.1"></td>
+			</tr>
+			<tr class="cameraBox"><td colspan="2"><hr size="4" color="#2FA0EC" style="border: outset;"></td></tr>
+		</table>
+		<table id="beamChange">
+			<tr><td colspan="10"><h3 style="text-align: center;">光照变换</h3></td></tr>
+			<tr>
+				<td align='right'>Ambient reflection (ka): </td> 
+				<td id='slider-ka-value' width='30px'>1.0</td> 
+				<td><input type='range' id='slider-ka' name='ka' min='0' max='1' step='0.01'></td>
+				<td align='right'>Ambient Color:</td>
+				<td colspan='2'><input type='color' id='ka-color' name='kacolor' value='#ff0000'></td>
+				<td align='center' colspan='2'>Light Position:</td>
+				<td align='center' colspan='2'>Light Color</td>
+			</tr>
+			<tr>
+				<td align='right'>Diffuse reflection (kd): </td>   
+				<td id='slider-kd-value' width='30px'>1.0</td> 
+				<td><input type='range' id='slider-kd' name='kd' min='0' max='1' step='0.01'></td>
+				<td align='right'>Diffuse Color: </td>
+				<td><input type='color' id='kd-color' name='kdcolor' value='#ffffff'></td>
+				<td align='right' width='30px'>X:</td>
+				<td id='slider-x-value' width='30px' align='center'>1</td>
+				<td width='150px'><input type='range' id='slider-x' name='xvalue' min='-10.0' max='10.0' step='0.1'></td>
+				<td align='right'>Ambient Color:</td>
+				<td><input type='color' id='lt-ambient-color' name='ltamcolor' value='#ffffff'></td>
+			</tr>
+			<tr>
+				<td align='right'>Specular reflection (ks): </td>
+				<td id='slider-ks-value' width='30px'>1.0</td>
+				<td><input type='range' id='slider-ks' name='ks' min='0' max='1' step='0.01'></td>
+				<td align='right'>Specular Color: </td>
+				<td><input type='color' id='ks-color' name='kscolor' value='#ffffff'></td>
+				<td align='right' width='30px'>Y:</td>
+				<td id='slider-y-value' width='30px' align='center'>1</td>
+				<td width='150px'><input type='range' id='slider-y' name='yvalue' min='-10.0' max='10.0' step='0.1'></td>
+				<td align='right'>Diffuse Color:</td>
+				<td><input type='color' id='lt-diffuse-color' name='ltdfcolor' value='#ffffff'></td>
+			</tr>
+			<tr>
+				<td align='right'>Shininess:</td>
+				<td id='slider-sh-value' width='30px'>80</td>
+				<td><input type='range' id='slider-sh' name='sh' min='1' max='500' step='1'></td>
+				<td align='right'>Background Color: </td>
+				<td><input type='color' id='bk-color' name='bkcolor' value='#00ffff'></td>
+				<td align='right' width='30px'>Z:</td>
+				<td id='slider-z-value' width='30px' align='center'>1</td>
+				<td width='150px'><input type='range' id='slider-z' name='zvalue' min='-10.0' max='10.0' step='0.1'></td>
+				<td align='right'>Specular Color:</td>
+				<td><input type='color' id='lt-specular-color' name='ltspcolor' value='#ffffff'></td>
+			</tr>
+		</table>
+	</body>
+</html>
