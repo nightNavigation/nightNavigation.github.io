@@ -1027,12 +1027,12 @@ function configureBumpTexture( url ){
 }
 
 var faceUrl = [
-	'./textures/posx.jpg',
-	'./textures/negx.jpg',
-	'./textures/negy.jpg',
-	'./textures/posy.jpg',
-	'./textures/posz.jpg',
-	'./textures/negz.jpg',
+	'./textures/skyBoximg/pos-x.jpg',
+	'./textures/skyBoximg/neg-x.jpg',
+	'./textures/skyBoximg/neg-y.jpg',
+	'./textures/skyBoximg/pos-y.jpg',
+	'./textures/skyBoximg/pos-z.jpg',
+	'./textures/skyBoximg/neg-z.jpg',
 ];
 
 var cubemap_image_cnt = 0;    
