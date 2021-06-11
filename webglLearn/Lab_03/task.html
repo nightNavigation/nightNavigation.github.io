@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>实验三</title>
+		<script id="rot-v-shader" type="x-shader/x-vertex">
+			attribute vec4 vPosition;
+			attribute vec4 vColor;
+			varying vec4 fColor;
+			uniform float theta;
+
+			void main(){
+				float u = cos(theta);
+				float v = sin(theta);
+				gl_Position.x = vPosition.x * u - vPosition.y * v;
+				gl_Position.y = vPosition.x * v + vPosition.y * u;
+				gl_Position.z = 0.0;
+				gl_Position.w = 1.0;
+				fColor = vColor;
+			}
+		</script>
+		<script id="rot-f-shader" type="x-shader/x-fragment">
+			precision mediump float;
+			varying vec4 fColor;
+			
+			void main(){
+				gl_FragColor = fColor;
+			}
+		</script>
+		<script id="vertex-shader" type="x-shader/x-vertex">
+			attribute vec4 vPosition;
+			void main(){
+				gl_Position = vPosition;
+			}
+		</script>
+		<script id="fragment-shader" type="x-shader/x-fragment">
+			precision mediump float;
+			void main(){
+				if(gl_FragCoord.y > 146.0){
+					gl_FragColor = vec4(0.07, 0.29, 0.32, 1.0);
+				}else{
+					gl_FragColor = vec4(0.18, 0.1, 0.0, 1.0);
+				}
+			}
+		</script>
+		<script src="./common/gl-matrix-min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./common/initShaders.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./common/webgl-utils.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./js/rotsquareAndboatFlash.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			#control{
+				border: #196AA2 2px dashed;
+				float: right;
+				width: 40%;
+			}
+			.clear{
+				clear: all;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>任务a</h1>
+		<canvas id="rot-canvas" width="365" height="365"></canvas>
+		<div id="control">
+			<h3>任务a控件</h3>
+			<button type="button" id="dirChange">旋转反向</button><br />
+			<span>速度（转/s）:1</span>
+			<input type="range" id="speedChange" min="1" max="100" value="20" />
+			<span>100</span>
+		</div>
+		<div class="clear"></div>
+		<hr />
+		<h1>任务b</h1>
+		<h4>实验0原图 <span style="padding: 180px;"></span> 简化动画</h4>
+		<img src="../Lab_00/images/p201612203502035.png" width="365" />
+		<canvas id="boat-canvas" width="365" height="365"></canvas>
+		<div id="control">
+			<h3>任务b控件</h3>
+			<p>受能力限制，将原图中的航船进行简化，以动画形式表现</p>
+			<span>航速 : 20</span>
+			<input type="range" id="boatSpeed" min="20" max="1000" value="200" />
+			<span>1000</span>
+		</div>
+	</body>
+</html>

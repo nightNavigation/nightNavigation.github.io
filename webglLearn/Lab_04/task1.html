@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<title>Lab4_1</title>
+		<script id="rt-vshader" type="x-shader/x-vertex">
+			attribute vec4 vPosition;
+			attribute vec4 vColor;
+			varying vec4 fColor;
+			
+			uniform vec3 theta;
+			uniform vec3 move;
+			uniform vec3 zoom;
+			
+			uniform vec4 r;
+			vec4 multq(vec4 a, vec4 b){
+				return(vec4(a.x*b.x-dot(a.yzw,b.yzw), a.x*b.yzw+b.x*a.yzw+cross(b.yzw,a.yzw)));
+			}
+
+			vec4 invq(vec4 a){
+				return (vec4(a.x, -a.yzw)/dot(a,a));
+			}
+			
+			void main(){
+				// randians()函数，将角度转换为弧度
+				vec3 angles = radians(theta);
+				vec3 cost = cos(theta);
+				vec3 sint = sin(theta);
+				
+				vec4 p;
+				
+				// 计算沿 x, y, z 三轴转过弧度后的点的位置
+				mat4 rx = mat4(1.0, 0.0, 0.0, 0.0,
+							   0.0, cost.x, sint.x, 0.0,
+							   0.0, -sint.x, cost.x, 0.0,
+							   0.0, 0.0, 0.0, 1.0);
+				
+				mat4 ry = mat4(cost.y, 0.0, -sint.y, 0.0,
+							   0.0, 1.0, 0.0, 0.0,
+							   sint.y, 0.0, cost.y, 0.0,
+							   0.0, 0.0, 0.0, 1.0);
+				
+				mat4 rz = mat4(cost.z, sint.z, 0.0, 0.0,
+							   -sint.z, cost.z, 0.0, 0.0,
+							   0.0, 0.0, 1.0, 0.0,
+							   0.0, 0.0, 0.0, 1.0);
+							   
+				mat4 mt = mat4(1.0, 0.0, 0.0, 0.0,
+							   0.0, 1.0, 0.0, 0.0,
+							   0.0, 0.0, 1.0, 0.0,
+							   move[0], move[1], move[2], 1.0);
+				
+				mat4 Zoom = mat4(1.0+zoom[0], 0.0, 0.0, 0.0,
+								 0.0, 1.0+zoom[1], 0.0, 0.0,
+								 0.0, 0.0, 1.0+zoom[2], 0.0,
+								 0.0, 0.0, 0.0, 1.0);
+				
+				fColor = vColor;
+				gl_Position = vPosition;
+				gl_Position = rz * ry * rx * gl_Position;
+				gl_Position = Zoom * gl_Position;
+				
+				p=vec4(0.0, gl_Position.xyz);
+				p=multq(r, multq(p,invq(r)));
+				gl_Position = vec4(p.yzw, 1.0);
+
+				gl_Position = mt * gl_Position;
+				gl_Position.z = -gl_Position.z;
+			}
+		</script> 
+		<script id="rt-fshader" type="x-shader/x-fragment">
+			precision mediump float;
+			varying vec4 fColor;
+			
+			void main(){
+				gl_FragColor = fColor;
+			}
+		</script>
+		<script src="./common/gl-matrix-min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./common/initShaders.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./common/webgl-utils.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./js/flashCube.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<h1 style="text-align: center;">实验任务 ： 旋转的立方体</h1>
+		<canvas id="rt-cb-canvas" width="512" height="512" style="float: left;">
+		    你的浏览器不支持HTML5 canvas元素
+		</canvas>
+		<h3>任务a : 通过三个按键选择旋转方向，绘制旋转的立方体</h3>
+		<button id="xButton">Rotate X</button>
+		<button id="yButton">Rotate Y</button>
+		<button id="zButton">Rotate Z</button>
+		<hr />
+		<h3>任务b : 实现旋转的立方体分别在X, Y, Z三条轴向上的平移</h3>
+		x轴上的平移 : <input type="range" id="xTranslation" min="-100" max="100" value="0" /> <br />
+		y轴上的平移 : <input type="range" id="yTranslation" min="-100" max="100" value="0" /> <br />
+		z轴上的平移 : <input type="range" id="zTranslation" min="-100" max="100" value="0" /> <br />
+		<hr />
+		<h3>任务c : 实现旋转的立方体分别沿X, Y, Z三条轴向上的缩放</h3>
+		x轴上的缩放 : <input type="range" id="xZoom" min="-100" max="100" value="0" /> <br />
+		y轴上的缩放 : <input type="range" id="yZoom" min="-100" max="100" value="0" /> <br />
+		z轴上的缩放 : <input type="range" id="zZoom" min="-100" max="100" value="0" /> <br />
+		<hr />
+		<h3>任务d : 将旋转的控制方式改为鼠标模拟的跟踪球</h3>
+		<hr />
+		<a href="./index.html"><button type="button">返回首页</button></a>
+	</body>
+</html>

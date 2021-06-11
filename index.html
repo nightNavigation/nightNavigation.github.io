@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<title>夜航船</title>
+		<link rel="stylesheet" type="text/css" href="./webglLearn/htmlbox/css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="./webglLearn/htmlbox/css/default.css" />
+		<link rel="stylesheet" type="text/css" href="./webglLearn/htmlbox/css/search-form.css" />
+		<script src="./webglLearn/htmlbox/js/jquery-1.11.0.min.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<div id="ground"></div>
+		<div id="banner">
+			<h1>night Navigation</h1>
+			<p>即使前路迷茫一如夜间远航，我依然会就着星光，奋力前行。</p>
+		</div>		
+		<div id="ground2">
+			<div class="nav">
+				<ul>
+					<li><a href="./index.html" class="sel">Home<br />个人首页</a></li>
+					<li><a href="javascript: alert('网站建设中')">Experiment<br />我的实验</a></li>
+					<li><a href="javascript: alert('网站建设中')">Article<br />心得随笔</a></li>
+					<li><a href="#" onclick="alert('网站建设中')">Collection<br />精华收藏</a></li>
+				</ul>
+			</div>
+			<div id="center">
+				<div class="title"><span>我的实验</span><a href="javascript: alert('网站建设中')"><img src="./webglLearn/htmlbox/images/more.gif" width="31" height="9" border="0" title="点击查看更多" /></a></div>
+				<div class="main">
+					<ul>
+						<li><a href="./webglLearn/Lab_00/images/p201612203502035.png">Lab_0</a></li>
+						<li><a href="./webglLearn/Lab_01/index.html">Lab_1</a></li>
+						<li><a href="./webglLearn/Lab_02/task.html">Lab_2</a></li>
+						<li><a href="./webglLearn/Lab_03/task.html">Lab_3</a></li>
+						<li><a href="./webglLearn/Lab_04/index.html">Lab_4</a></li>
+						<li><a href="./webglLearn/Lab_05/index.html">Lab_5</a></li>
+						<li><a href="./webglLearn/Lab_06/index.html">Lab_6</a></li>
+						<li><a href="./webglLearn/Lab_07/index.html">Lab_7</a></li>
+						<li><a href="./webglLearn/courseDesign/index.html">Science and Technology Exhibition Hall</a></li>
+					</ul>
+				</div>
+				<div class="title"><span>心得随笔</span><a href="javascript: alert('网站建设中')"><img src="./webglLearn/htmlbox/images/more.gif" width="31" height="9" border="0" title="点击查看更多" /></a></div>
+				<div class="main">
+					<ul>
+						<li><a href="#">网站建设中</a></li>
+					</ul>
+				</div>
+				<div class="title"><span>精华收藏</span><a href="javascript: alert('网站建设中')"><img src="./webglLearn/htmlbox/images/more.gif" width="31" height="9" border="0" title="点击查看更多" /></a></div>
+				<div class="main">
+					<ul>
+						<li><a href="#">网站建设中</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="introduction">
+				<img src="./webglLearn/htmlbox/images/head.png" onmouseover="showOrigin()"/>
+				<h4>night Navigation</h4>
+				<span>welcome to my night boat</span>
+				<br /><br />
+				<div class="clear"></div>
+				<p>祖<span style="padding-right: 2em;"></span>居： <span style="font-style: italic;color: blue;">浙江省温州乐清市</span></p>
+				<p>联系方式:<span style="padding-right: 1em;"></span><span style="font-style: italic;color: blue;">652043089(QQ)</span></p>			
+				<p>自我评价:<span style="padding-right: 1em;"></span><span style="font-style: italic;color: blue;">奋进中的“程序猿”</span></p>
+			</div>
+
+			<form onSubmit="submitFn(this, event);">
+				<div class="search-wrapper">
+					<div class="input-holder">
+						<input type="text" class="search-input" placeholder="请输入关键词" />
+						<button class="search-icon" onClick="searchToggle(this, event);"><span></span></button>
+					</div>
+					<span class="close" onClick="searchToggle(this, event);"></span>
+					<div class="result-container">
+			
+					</div>
+				</div>
+			</form>
+			
+			<script type="text/javascript">
+			function searchToggle(obj, evt){
+				var container = $(obj).closest('.search-wrapper');
+			
+				if(!container.hasClass('active')){
+					container.addClass('active');
+					evt.preventDefault();
+				}
+				else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
+					container.removeClass('active');
+					// clear input
+					container.find('.search-input').val('');
+					// clear and hide result container when we press close
+					container.find('.result-container').fadeOut(100, function(){$(this).empty();});
+				}
+			}
+			
+			function submitFn(obj, evt){
+				alert("网站建设中");
+				value = $(obj).find('.search-input').val().trim();		
+				evt.preventDefault();
+			}
+			</script>
+			<div id="origin">
+				<p style="font-size: medium; font-weight: 800;">夜航船的由来:</p>
+				<p>
+					<span style="padding-right: 2em;"></span>夜航船是南方水乡苦途长旅的象征，人们外出都要坐船，在时日缓慢的航行途中，坐着无聊，便以闲谈消遣。
+					其中乘客有文人学士，也有富商大贾。有赴任的官员，也有投亲的百姓。各色人等应有尽有，谈话的内容也包罗万象。
+					张岱说：“天下学问，惟夜航船最难对付。”
+					<br />
+					<span style="padding-right: 2em;"></span>古剑陶庵老人张岱,也曾著书20卷，名《夜航船》。寓意书中所录，保罗万象。
+					<br />
+					<span style="padding-right: 2em;"></span>我名夜航，希望：即使前路迷茫一如夜间远航，我依然会就着星光光，奋力前行。
+				</p>
+			</div>
+		</div>
+	</body>
+</html>

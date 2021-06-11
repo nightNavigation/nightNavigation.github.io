@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="description" content="HTML5 Audio Spectrum Visualizer">
+		<title>Video Play</title>
+		<link type="text/css" rel="stylesheet" href="./css/flash.min.css">
+		<link type="text/css" rel="stylesheet" href="./css/style.css">
+		<script type="text/javascript" src="./js/pace.min.js"></script>
+		<script type="text/javascript" src="./js/three.min.js"></script>
+		<script type="text/javascript" src="./js/OrbitControls.js"></script>
+		<script type="text/javascript" src="./js/stats.min.js"></script>
+		<script type="text/javascript" src="./js/dat.gui.min.js"></script>
+		<script type="text/javascript" src="./js/app.js"></script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<!-- the container to display corresponding information -->
+			<div id="stats"></div>
+			<div id="info">HTML5 3D Audio Spectrum Visualizer</div>
+			<div id="controlPanel">
+				<a href="javascript:void(0);" id="playButton">Play Default</a><br /><br />
+				<p>or upload a file</p>
+				<input type="file" id="upload" /><br /><br />
+				<p>or drag and drop a file to play</p><br />
+				<a href="./index.html" id="goback">返回首页</a><br />
+				<div id="action">&lt;&lt;</div>
+			</div>
+			<!-- the container to render the scene -->
+			<div id="visualizer_container"></div>
+		</div>
+	</body>
+</html>

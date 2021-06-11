@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<title>任务E</title>
+		<script id="vertex-shader" type="x-shader/x-vertex">
+			attribute vec4 vPosition;
+			void main(){
+				gl_Position = vPosition;
+			}
+		</script>
+		<script id="fragment-shader" type="x-shade/x-fragment">
+			precision mediump float;
+			void main(){
+				// gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+				gl_FragColor = vec4((360.0-gl_FragCoord.x)/360.0*1.0, (gl_FragCoord.x/360.0)*1.0, (gl_FragCoord.y/360.0)*1.0, 1.0);
+			}
+		</script>
+		<script id="vertex-shader-new" type="x-shader/x-vertex">
+			attribute vec4 vPosition;
+			attribute vec4 vColor;
+			varying vec4 fColor;
+			void main(){
+				gl_Position = vPosition;
+				fColor = vColor;
+			}
+		</script>
+		<script id="fragment-shader-new" type="x-shade/x-fragment">
+			precision mediump float;
+			varying vec4 fColor;
+			void main(){
+				// gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+				gl_FragColor = fColor;
+			}
+		</script>
+		<script src="./common/gl-matrix-min.js" type="text/javascript"></script>
+		<script src="./common/initShaders.js" type="text/javascript"></script>
+		<script src="./common/webgl-utils.js" type="text/javascript"></script>
+		<script src="./js/triangleTask5.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<h1>任务E</h1>
+		<h3>绘制渐变色的三角形，三角形大小可变，颜色按照示例</h3>
+		<h4>自主尝试 <span style="padding: 180px;"></span> 正规写法</h4>
+		<canvas id="triangle-canvas" style="border: none; float: left; padding-right: 60px;" width="360" height="360"></canvas>
+		<canvas id="triangle2-canvas" style="border: none;" width="360" height="360"></canvas>
+		<div style="clear: both;"></div>
+		<br />
+		<hr size="4" color="blue" width="60%" align="left" />
+		<a href="./index.html"><button type="button">返回</button></a>
+	</body>
+</html>

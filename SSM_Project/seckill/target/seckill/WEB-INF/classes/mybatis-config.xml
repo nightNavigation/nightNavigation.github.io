@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!-- 配置全局属性 -->
+    <!-- 最重要的3个配置，剩下类似数据库链接池、事务等用spring进行配置 -->
+    <settings>
+        <!-- 使用 jdbc 的 GeneratedKeys 获取数据库自增主键值,
+        主键值不进行传入打开时，不用关注底层API，自动赋值id 默认 value：false -->
+        <setting name="useGeneratedKeys" value="true" />
+        <!-- 使用列别名替换列名 默认：true
+            select name as title from table
+            -name为数据库中列名，title为实体中的属性名
+            MyBatis自动识别数据库中的数据并赋值给实体对象
+         -->
+        <setting name="useColumnLabel" value="true" />
+        <!-- 开启驼峰命名转换：Table(createTime) -> Entity(createtime) -->
+        <!-- 数据库命名规范为下划线命名法，java命名规范为驼峰命名法 -->
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+    </settings>
+</configuration>
+
+

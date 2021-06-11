@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 命名规范 mapper 对应的DAO映射是什么，命名就是对应接口名 + .xml -->
+
+<mapper namespace="org.seckill.dao.SuccessKilledDao">
+    <insert id="insertSuccessKilled" >
+        <!-- sql 书写技巧：当主键重复插入时，主键冲突，报错->
+            在 into 前 + ignore =>主键重复插入时，不报错且不执行插入，返回 0
+         -->
+        INSERT IGNORE INTO sucKilled(seckill_id, user_phone, state)
+        VALUES (#{seckillId}, #{userPhone}, 0);
+    </insert>
+
+    <select id="queryByIdwithSeckill" resultType="SucKilled">
+        <!-- 如何告诉MyBatis把结果映射到successKilled同时映射seckillTab属性 -->
+        <!-- MyBatis 优势：能够自由的控制 sql -->
+        SELECT
+        sk.seckill_id,
+        sk.user_phone,
+        sk.kill_time,
+        sk.state,
+        s.seckill_id "seckillTab.seckill_id",
+        s.seckill_name "seckillTab.seckill_name",
+        s.seckill_number "seckillTab.seckill_number",
+        s.start_time "seckillTab.start_time",
+        s.end_time "seckillTab.end_time",
+        s.create_time "seckillTab.create_time"
+        FROM sucKilled sk
+        INNER JOIN seckillTab s ON sk.seckill_id = s.seckill_id
+        WHERE sk.seckill_id = #{seckillId}
+        AND sk.user_phone = #{userPhone}
+    </select>
+</mapper>
+
+

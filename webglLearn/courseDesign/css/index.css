@@ -1,0 +1,116 @@
+body{
+	list-style-type: none;
+	overflow-x: hidden;
+	background: url(../images/bg.JPG) no-repeat center center fixed;
+	/*兼容浏览器版本*/
+	-webkit-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+img{
+	width: 60px;
+	height: 60px;
+}
+h1{
+	margin: 70px;
+	font-size: 50px;
+	font-family: 'Times New Roman', Times, serif;
+	color: #DDDDDD;
+	text-align: center;
+}
+button{
+	width:100px;
+	height:30px;
+	cursor: pointer;
+}
+.style{
+	font-size: 22px;
+	color:white;
+	font-weight:bold;
+	font-family: 'Times New Roman', Times, serif;
+	line-height: 2;
+}
+.style1{
+	color:darkgray;
+}
+.style2{
+	color: darkgray;
+}
+/* 按钮类型 */
+.buttonType{
+	width:100px;
+	text-align:center;
+	line-height:100%;
+	padding:0.3em;
+	font:16px 'Times New Roman', Times, serif;
+	font-style:normal;
+	text-decoration:none;
+	margin:2px;
+	vertical-align:text-bottom;
+	zoom:1;
+	outline:none;
+	font-size-adjust:none;
+	font-stretch:normal;
+	border-radius:50px;
+	box-shadow:0px 1px 2px rgba(0,0,0,0.2);
+	text-shadow:0px 1px 1px rgba(0,0,0,0.3);
+	color:#595951;
+	border:0.2px solid rgb(229, 170, 236);
+	background-repeat:repeat;
+	background-size:auto;
+	background-origin:padding-box;
+	background-clip:padding-box;
+	background-color:rgb(233, 172, 248);
+	background: linear-gradient(to bottom, #eeeff9 0%,rgb(192, 140, 226) 100%);
+}
+.buttonType:active {
+	background:rgb(14, 175, 180);
+}
+.clearBoth{
+	clear: both;
+}
+/* 左侧栏 */
+#leftColumn{
+	position: absolute;
+	top: 32%;
+	left: 8%;
+	width: 24%;
+	text-align: center;
+}
+#leftColumn:hover{
+	background: transparent;
+	box-sizing:border-box;
+	border: rgb(161, 90, 243) 1px solid;
+	box-shadow: 0px 15px 15px rgba(0,0,0,.5);
+	border-radius:15px;
+}
+/* 中间栏 */
+#middleColumn{
+	position: absolute;
+	top: 32%;
+	left: 38%;
+	width: 24%;
+	text-align: center;
+}
+#middleColumn:hover{
+	background: transparent;
+	box-sizing:border-box;
+	border: rgb(223, 146, 230) 1px solid;
+	box-shadow: 0px 15px 15px rgba(0,0,0,.5);
+	border-radius:15px;
+}
+/* 右侧栏 */
+#rightColumn{
+	position: absolute;
+	top: 32%;
+	right: 8%;
+	width: 24%;
+	text-align: center;
+}
+#rightColumn:hover{
+	background: transparent;
+	box-sizing:border-box;
+	border: rgb(205, 173, 247) 1px solid;
+	box-shadow: 0px 15px 15px rgba(0,0,0,.5);
+	border-radius:15px;
+}

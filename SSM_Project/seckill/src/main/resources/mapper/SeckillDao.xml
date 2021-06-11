@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 命名规范 mapper 对应的DAO映射是什么，命名就是对应接口名 + .xml -->
+
+<!-- mapper目的：为DAO接口方法提供sql语句配置
+	 namespace="(链接接口的地址java包地址)"
+ -->
+<mapper namespace="org.seckill.dao.SeckillDao">
+    <!-- 写增、删、改、查 sql 语句 -->
+    <!--  <![CDATA[...]]> 语法：用于.xml文本中，用以标记纯文本， -->
+    <update id="reduceNumber">
+        UPDATE
+            seckillTab
+        SET
+            seckill_number = seckill_number -1
+        WHERE seckill_id = #{seckillId}
+          AND start_time <![CDATA[<=]]> #{killTime}
+          AND end_time >= #{killTime}
+          AND seckill_number > 0;
+    </update>
+
+    <select id="queryById" resultType="SeckillTab" parameterType="long">
+        SELECT
+            *
+        FROM
+            seckillTab
+        WHERE
+            seckill_id = #{seckillId};
+    </select>
+    <!-- order by->根据排序查询，默认升序（asc)【降序（desc)】 -->
+    <select id="queryAll" resultType="SeckillTab" parameterType="int">
+        SELECT
+            *
+        FROM
+            seckillTab
+        ORDER BY
+            create_time desc limit #{offset}, #{limit};
+    </select>
+</mapper>
+
+
