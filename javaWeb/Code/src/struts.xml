@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <package name="default" extends="struts-default">
+    	<!-- 在 action 中如果没有定义 method 属性 会默认调用 execute() -->
+        <action name="regAction" class="com.action.UserAction" method="reg">
+			<result name="regError">/pages/reg.jsp</result>
+			<result name="regSuccess">/pages/showReg.jsp</result>
+		</action>
+		<action name="loginAction" class="com.action.UserAction" method="login">
+			<!-- name="loginError":逻辑视图   /login.jsp :物理视图 -->
+			<result name="loginError">/pages/login.jsp</result>
+			<result name="loginSuccess">/index.jsp</result>
+		</action>
+		<action name="logoutAction" class="com.action.UserAction" method="loginOut">
+			<result name="loginoutSuccess">/index.jsp</result>
+		</action>
+		<action name="showIndexAction" class="com.action.ProductsAction" method="indexProductShow">
+			<result name="showSuccess">/blocks/center_column.jsp</result>
+		</action>
+		<action name="showProductAction" class="com.action.ProductsAction" method="productShow">
+			<result name="showSuccess">/pages/product.jsp</result>
+		</action>
+		<action name="itemAction" class="com.action.ProductsAction" method="itemShow">
+			<result name="showError">/pages/product.jsp</result>
+			<result name="showSuccess">/pages/item.jsp</result>
+		</action>
+		<action name="cartShowAction" class="com.action.CartAction" method="cartShow">
+			<result name="showError">/pages/login.jsp</result>
+			<result name="showSuccess">/pages/cart_view.jsp</result>
+		</action>
+		<action name="cartAddAction" class="com.action.CartAction" method="cartSet">
+			<result name="missError">/pages/login.jsp</result>
+			<result name="setError">/pages/item.jsp</result>
+			<result name="showSuccess">/pages/cart_view.jsp</result>
+		</action>
+		<action name="cartUpdateAction" class="com.action.CartAction" method="cartUpdate">
+			<result name="updateError">/pages/cart_view.jsp</result>
+			<result name="showSuccess">/pages/cart_view.jsp</result>
+		</action>
+    </package>
+</struts>

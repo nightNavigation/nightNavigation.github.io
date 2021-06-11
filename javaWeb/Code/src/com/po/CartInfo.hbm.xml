@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2021??5??18?? ????2:51:17 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.po.CartInfo" table="CART">
+        <id name="cartId" type="int">
+            <column name="CARTID" />
+            <generator class="native" />
+        </id>
+        <property name="productId" type="int">
+            <column name="PRODUCTID" />
+        </property>
+        <property name="userName" type="java.lang.String">
+            <column name="USERNAME" />
+        </property>
+        <property name="count" type="int">
+            <column name="COUNT" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2021??5??20?? ????8:56:12 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.po.Product" table="PRODUCT">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="sort" type="java.lang.Integer">
+            <column name="SORT" />
+        </property>
+        <property name="price" type="java.lang.Double">
+            <column name="PRICE" />
+        </property>
+        <property name="oneprice" type="java.lang.Double">
+            <column name="ONEPRICE" />
+        </property>
+        <property name="img" type="java.lang.String">
+            <column name="IMG" />
+        </property>
+        <property name="date" type="java.lang.String">
+            <column name="DATE" />
+        </property>
+        <property name="sale" type="java.lang.Integer">
+            <column name="SALE" />
+        </property>
+        <property name="face" type="java.lang.String">
+            <column name="FACE" />
+        </property>
+        <property name="body" type="java.lang.String">
+            <column name="BODY" />
+        </property>
+        <property name="length" type="java.lang.Double">
+            <column name="LENGTH" />
+        </property>
+        <property name="quantity" type="java.lang.Integer">
+            <column name="QUANTITY" />
+        </property>
+        <property name="source" type="java.lang.String">
+            <column name="SOURCE" />
+        </property>
+    </class>
+</hibernate-mapping>

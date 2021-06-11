@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory name="webStoreFactory">
+        <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+        <property name="hibernate.connection.password">sasasa</property>
+        <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=shopping;</property>
+        <property name="hibernate.connection.username">sa</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+        
+        <mapping resource="com/po/UserInfo.hbm.xml" />
+        <mapping resource="com/po/Product.hbm.xml" />
+        <mapping resource="com/po/CartInfo.hbm.xml" />
+    </session-factory>
+</hibernate-configuration>
