@@ -1,0 +1,108 @@
+@charset "utf-8";
+/**
+ * 公共样式
+ */
+ul, ol {
+	list-style-type: none;
+}
+input, textarea, select {
+	vertical-align: middle;
+	font-size: 14px;
+	padding: 2px;
+	font-family: 'Arial Unicode MS', Verdana, Arial, Helvetica, sans-serif;
+}
+a, a:hover {
+	text-decoration: none;
+}
+
+/**
+ * main page
+ */
+#hitmouse{
+	position:relative;
+	margin:25% 0 0;
+	width:750px;
+	height:550px;
+}
+#hitmouse .background {
+    background-image:url(../images/set_bg.png);
+	background-repeat:no-repeat;
+}
+#hitmouse .icon {
+	background-image: url(../images/icon.png);
+	background-repeat: no-repeat;
+}
+
+#hitmouse .block {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 750px;
+	height: 550px;
+}
+
+/**
+ * 预备界面
+ */
+#gameCover {
+	background-position: 0px 0px;
+	display: block;
+}
+#btnSound {
+	display: block;
+	position: absolute;
+	right: 30px;
+	top: 30px;
+	width: 52px;
+	height: 52px;
+	background-position: -331px -132px;	
+}
+#btnSound.disabled {
+
+	background-position: -331px -80px;
+}
+
+#btnPlay {
+	display: block;
+	position: absolute;
+	right: 85px;
+	top: 220px;
+	width:180px;
+	height:70px;
+	background-position: -12px -693px;
+}
+#btnPlay:hover {
+	background-position: -192px -693px;
+}
+/**
+ * 游戏结束
+ */
+#gameOver {
+	display: none;
+	background-image:url(../images/bg_gameover.png);
+	background-repeat:no-repeat;
+}
+#btnRetry {
+	display: block;
+	position: absolute;
+	left: 188px;
+	top: 385px;
+	width: 177px;
+	height: 74px;
+	background-position: -15px -763px;
+}
+#btnRetry:hover {
+	background-position: -193px -763px;
+}
+#btnBackToMenu {
+	display: block;
+	position: absolute;
+	right: 162px;
+	top:395px;
+	width:200px;
+	height:65px;
+	background-position: -21px -914px;
+}
+#btnBackToMenu:hover {
+	background-position: -227px -916px;
+}

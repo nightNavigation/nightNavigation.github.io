@@ -1,0 +1,335 @@
+#labNav2{
+	position: absolute;
+	margin-top: 13%;
+	margin-left: 50%;
+}
+#labNav2 .title{ 
+	height:20px; 
+	width:400px; 
+	border-bottom:1px rgb(255, 187, 26) solid; 
+	margin-bottom:5px;
+}
+#labNav2 .title span{ 
+	display:block; 
+	height:19px; 
+	float:left; 
+	width:100px;
+	border:1px #C4B9A3 solid;
+	border-bottom:0px; 
+	background:rgb(255, 187, 26); 
+	color:#663121; 
+	line-height:19px; 
+	text-align:center;
+}
+#labNav2 .title a{ 
+	float:right; 
+	padding-top:5px;
+}
+#labNav2 .main{ 
+	width:400px; 
+}
+#labNav2 .main ul{}
+#labNav2 .main ul li{ 
+	line-height:20px; 
+	padding-left:10px; 
+	width:75px;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	float: left;
+}
+#container{
+	width:750px;
+	margin: 25% auto 0;
+	display: none;
+}
+#main{
+	width: 750px;
+	height: 550px;
+	float: right;
+	border-right: 1px solid #d3d3d3;
+	background-image:url(../images/bg_canvas.png);
+	position: relative;
+	cursor: url(../images/hammer.ico), auto;
+}
+#count{
+	width: 41px;
+	height: 30px;
+	position: absolute;
+	display: none;
+}
+.mouse{
+	width: 115px;
+	height: 105px;
+	position: absolute;
+	display: block;
+}
+.normal{
+	background-image:url(../images/mouse_normal.png);
+}
+.over{
+	background-image:url(../images/mouse_over.png);
+}
+.hit{
+	background-image:url(../images/mouse_hit.png);
+}
+#menu{
+	position:relative;
+	margin-top: 29%;
+	margin-left: 0;
+	float: right;
+	width: 250px;
+}
+#scroll{
+	width: 100%;
+}
+#progressText{
+	position: absolute;
+	top: 45%;
+	overflow: hidden;
+	margin-left: 14%;
+	width: 76%;
+	height: 10%;
+}
+#progressText img{
+	width: 100%;
+}
+#time_roller{
+	position: absolute;
+	width: 100%;	
+}
+#roller{
+	position: absolute;
+	width: 100%;
+}
+#score{
+	display: block;
+	position: absolute;
+	background-image: url(../images/icon.png);
+	background-repeat: no-repeat;
+	left: 12%;
+	top: 54%;
+	width: 100px;
+	height: 30px;
+	background-position: -12px -161px;
+}
+#grade{
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 54%;
+	width: 100px;
+	height: 30px;
+	text-align: center;
+}
+#grade img{
+	height: 30px;
+}
+#next{
+	position: absolute;
+	width: 650px;
+	margin-top: 26%;
+	margin-left: 6%;
+	display: none;
+}
+#next #head{
+	position: absolute;
+	left: 182px;
+	height: 45px;
+	top: 40px;
+}
+#next #next_game{
+	position: absolute;
+	left: 182px;
+	height: 45px;
+	top: 90px;
+}
+#next #tryagain{
+	position: absolute;
+	left: 268px;
+	height: 45px;
+	top: 137px;
+}
+#next #back{
+	position: absolute;
+	left: 210px;
+	height: 45px;
+	top: 186px;
+}
+#gradeNeed{
+	display: block;
+	position: absolute;
+	left: 16%;
+	top: 60%;
+	width: 260px;
+}
+#gradeNeed img{
+	height: 28px;
+	float: left;
+}
+#gradeSub{
+	position: absolute;
+	display: none;
+	width: 445px;
+	top: 25%;
+	left: 20%;
+}
+#grade2{
+	display: block;
+	position: absolute;
+	left: 185px;
+	top: 125px;
+	width: 100px;
+	height: 30px;
+	text-align: center;
+}
+#grade2 img{
+	height: 30px;
+}
+#levelget{
+	display: block;
+	position: absolute;
+	left: 185px;
+	top: 180px;
+	width: 100px;
+	height: 30px;
+	text-align: center;
+}
+#levelget img{
+	height: 30px;
+}
+#player{
+	border: none;
+	background-color: rgba(255, 255, 255, 0.1);
+	top: 73px;
+	position: absolute;
+	left: 175px;
+}
+#sub{
+	display: block;
+	position: absolute;
+	background-image: url(../images/icon2.png);
+	background-repeat: no-repeat;
+	width: 98px;
+	height: 30px;
+	top: 336px;
+	left: 75px;
+}
+#sub:hover{
+	background-position: -98px 0px;
+	cursor: pointer;
+}
+#sub:active{
+	background-position: 0px 0px;
+}
+#rankSee{
+	display: block;
+	position: absolute;
+	background-image: url(../images/icon2.png);
+	background-repeat: no-repeat;
+	width: 98px;
+	height: 30px;
+	top: 372px;
+	left: 75px;
+	background-position: 0px -30px;
+}
+#rankSee:hover{
+	background-position: -93px -30px;
+	cursor: pointer;
+}
+#rankSee:active{
+}
+.buttonStyle{
+	width:100px;
+	text-align:center;
+	line-height:100%;
+	padding:0.3em;
+	font-style:normal;
+	text-decoration:none;
+	margin:2px;
+	vertical-align:text-bottom;
+	outline:none;
+	font-size-adjust:none;
+	font-stretch:normal;
+	border-radius:50px;
+	box-shadow:0px 1px 2px rgba(0,0,0,0.2);
+	text-shadow:0px 1px 1px rgba(0,0,0,0.3);
+	color:#ffffff;
+	border:0.2px solid #11ffff;
+	background: linear-gradient(to bottom, rgb(41, 218, 212) 0%, rgb(64, 64, 236) 100%);
+}
+.buttonStyle:hover{
+	cursor: pointer;
+}
+.buttonStyle:active{
+	color: rgb(154, 154, 154);
+	background: rgba(121, 121, 240, 0.966);
+}
+#hideSub{
+	position: absolute;
+	bottom: 64px;
+	left: 194px;
+}
+#mySubmit{
+	position: absolute;
+	bottom: 64px;
+	left: 64px;
+}
+#rank{
+	position: absolute;
+	display: none;
+	width: 285px;
+	left: 30%;
+}
+#rank img{
+	width: 100%;
+}
+#rank table{
+	position: absolute;
+	width: 220px;
+	top: 152px;
+	left: 36px;
+	border: 0;
+	font-style: italic;
+	text-align: center;
+}
+.tr_1{
+	color: red;
+	background-color: rgba(131, 148, 131, 0.2);
+}
+.tr_2{
+	color: orange;
+	background-color: rgba(225, 253, 225, 0.2);
+}
+.tr_3{
+	color: blue;
+	background-color: rgba(131, 148, 131, 0.2);
+}
+.tr_4_0{
+	/* color: black; */
+	background-color: rgba(131, 148, 131, 0.2);
+}
+.tr_4_1{
+	/* color: black; */
+	background-color: rgba(225, 253, 225, 0.2);
+}
+#hideRank{
+	position: absolute;
+	bottom: 126px;
+	left: 88px;
+	color: red;
+	border:0.2px solid #ff9e2e;
+	background: linear-gradient(to bottom, rgb(217, 218, 145) 0%, rgb(236, 143, 29) 100%);
+}
+#hideRank:active{
+	background: rgba(240, 168, 104, 0.966);
+	color: rgb(230, 198, 122);
+}
+#clearRank{
+	display: none;
+	position: absolute;
+	top: 376px;
+	left: 164px;
+}
+
+

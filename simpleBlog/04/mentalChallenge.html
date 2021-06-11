@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<title>脑力大考验</title>
+		<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/default.css" />
+		<link rel="stylesheet" type="text/css" href="../css/search-form.css" />
+		<link rel="stylesheet" type="text/css" href="./css/gameStyle.css"/>
+		<script src="./js/myGame.js" type="text/javascript" charset="utf-8"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body>
+		<div id="ground"></div>
+		<div id="banner">
+			<h1>night Navigation</h1>
+			<p>即使前路迷茫一如夜间远航，我依然会就着星光，奋力前行。</p>
+		</div>		
+		<div id="ground2">
+			<div class="nav nav2">
+				<ul>
+					<li><a href="../index.html">Home<br />首页</a></li>
+					<li><a href="#" class="sel">Experiment<br />我的实验</a></li>
+					<li><a href="#">Article<br />心得随笔</a></li>
+					<li><a href="#">Collection<br />精华收藏</a></li>
+				</ul>
+			</div>
+			<div id="labNav2">
+				<div class="title"><span>我的实验</span><a href="#"><img src="../images/more.gif" width="31" height="9" border="0" title="点击查看更多" /></a></div>
+				<div class="main">
+					<ul>
+						<li><a href="../01/primeShow.html" title="寻找素数">寻找素数</a></li>
+						<li><a href="../02/taxCalculation.html" title="个人所得税计算">个人所得税计算</a></li>
+						<li><a href="../03/mouseHit.html" title="打地鼠">打地鼠</a></li>
+						<li><a href="./mentalChallenge.html" class="select" title="脑力大挑战">脑力大挑战</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="center">
+				<h1><img src="./images/head.png" ></h1>
+				<div id="puzzle">
+					<ul>
+						<li class="flip">
+							<div class="guessImg"><h3>01</h3></div>
+							<div class="guessImgbg"><h3>01</h3></div>
+						</li>
+						<li class="flip">
+							<div class="guessImg"><h3>02</h3></div>
+							<div class="guessImgbg"><h3>02</h3></div>
+						</li>
+						<li class="flip">
+							<div class="guessImg"><h3>03</h3></div>
+							<div class="guessImgbg"><h3>03</h3></div>
+						</li>
+						<li class="flip">
+							<div class="guessImg"><h3>04</h3></div>
+							<div class="guessImgbg"><h3>04</h3></div>
+						</li>
+					</ul>
+				</div>
+				<div id="control">
+					<div id="reset">
+						<img src="images/bt_reset.png" >
+					</div>
+					<div id="exchange">
+						<img src="images/bt_exchange.png" >
+					</div>
+					<div id="start">
+						<img src="images/bt_start.png" >
+					</div>
+					<div id="rank">
+						<img src="images/bt_rank.png" >
+					</div>
+				</div>
+				<h4><img src="./images/swapLog.png" ></h4>
+				<div id="flowMap">
+				</div>
+				<div id="reply">
+					<h2>候选答案</h2>
+					<div id="ansBox">
+						<table cellpadding="0" cellspacing="2">
+							<tr>
+								<td id="ans0"></td>
+								<td id="ans1"></td>
+							</tr>
+							<tr>
+								<td id="ans2"></td>
+								<td id="ans3"></td>
+							</tr>
+						</table>
+					</div>
+					<h3>计时器</h3>
+					<div id="showtime">
+						<span>00</span>
+						<span>:</span>
+						<span>00</span>
+						<span>:</span>
+						<span>00</span>
+					</div>
+				</div>
+				<div id="rankSee">
+					<img src="./images/list.png" >
+					<button id="hideRank" type="button" class="buttonStyle">返回</button>
+					<div id="stormRank"></div>
+				</div>
+				<div id="gradeSub">
+					<span><img src="images/grade.png" ></span><br />
+					<p>
+						<label>昵称：</label>
+						<input type="text" id="player" value="" size="16" maxlength="6"/>						
+					</p>
+					<p id="getTime"><label>总用时：</label><span>00</span><span>:</span><span>00</span><span>:</span><span>00</span></p>
+					<label>得分：</label><span id="grade"></span>
+					<button id="mySubmit" type="button" class="buttonStyle">提交</button>
+					<button id="hideSub" type="button" class="buttonStyle">返回</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

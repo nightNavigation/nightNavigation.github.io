@@ -1,0 +1,23 @@
+#primeMain{
+	position: absolute;
+	margin-top: 36%;
+	margin-left: 40%;
+}
+#primeMain .title{
+	text-align: center;
+	font-size: large;
+	font-family: 宋体;
+	font-weight: bold;
+}
+table{}
+tr{
+	text-align: center;
+}
+td{
+	width: 50px;
+	background-color: rgba(85, 255, 0, 0.56);
+}
+#pr{
+	background-color: rgba(255, 138, 5, 0.56);	
+}
+
